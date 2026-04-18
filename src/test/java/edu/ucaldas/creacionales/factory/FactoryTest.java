@@ -3,23 +3,30 @@ package edu.ucaldas.creacionales.factory;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class FactoryTest {
+class FactoryTest {
 
     @Test
-    void shouldCreateEmailNotification() {
-        NotificationFactory factory = new EmailFactory();
-        Notification notification = factory.createNotification();
-
-        assertNotNull(notification);
-        assertTrue(notification instanceof EmailNotification);
+    void debeCrearEmailNotification() {
+        Notification notif = NotificationFactory.createNotification("EMAIL");
+        assertInstanceOf(EmailNotification.class, notif);
     }
 
     @Test
-    void shouldCreateSMSNotification() {
-        NotificationFactory factory = new SMSFactory();
-        Notification notification = factory.createNotification();
+    void debeCrearSMSNotification() {
+        Notification notif = NotificationFactory.createNotification("SMS");
+        assertInstanceOf(SMSNotification.class, notif);
+    }
 
-        assertNotNull(notification);
-        assertTrue(notification instanceof SMSNotification);
+    @Test
+    void debeCrearPushNotification() {
+        Notification notif = NotificationFactory.createNotification("PUSH");
+        assertInstanceOf(PushNotification.class, notif);
+    }
+
+    @Test
+    void debeLanzarExcepcionConTipoInvalido() {
+        assertThrows(IllegalArgumentException.class, () ->
+            NotificationFactory.createNotification("WHATSAPP")
+        );
     }
 }

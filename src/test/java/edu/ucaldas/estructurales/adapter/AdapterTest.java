@@ -3,16 +3,27 @@ package edu.ucaldas.estructurales.adapter;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class AdapterTest {
+class AdapterTest {
 
     @Test
-    void shouldConvertXMLtoJSON() {
+    void debeConvertirXMLaJSON() {
         XMLService xmlService = new XMLService();
         JSONService adapter = new XMLtoJSONAdapter(xmlService);
 
-        String json = adapter.getJSON();
+        String resultado = adapter.getJSON();
 
-        assertNotNull(json);
-        assertTrue(json.contains("{"));
+        assertNotNull(resultado);
+        assertTrue(resultado.contains("\"nombre\""));
+        assertTrue(resultado.contains("\"edad\""));
+        assertTrue(resultado.contains("Juan"));
+        assertTrue(resultado.contains("30"));
+    }
+
+    @Test
+    void debeImplementarJSONService() {
+        XMLService xmlService = new XMLService();
+        JSONService adapter = new XMLtoJSONAdapter(xmlService);
+
+        assertInstanceOf(JSONService.class, adapter);
     }
 }
